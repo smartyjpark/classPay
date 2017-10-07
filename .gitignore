@@ -1,6 +1,6 @@
 # Created by https://www.gitignore.io/api/node,webstorm,sublimetext
 
-.idea
+/.idea
 config.json
 
 ### Node ###
