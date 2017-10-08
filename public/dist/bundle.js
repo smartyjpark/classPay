@@ -966,26 +966,8 @@ function viewPlan(infoClass, target){
     document.querySelector("."+infoClass+"-price").innerHTML = target.dataset.price;
 }
 
-function getToken(){
-    __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'post',
-        url: "https://api.iamport.kr/users/getToken",
-        header: {
-            imp_key: '6626876387746060',
-            imp_secret: 'qqNhlQRWu9yiSdDIWo9ApOCelxh9SNAidozzfrwJA42tiFbe3lPs9sHuZZERMea0DKASb6CMbEftjqHn'
-        }
-    })
-        .then(function(response){
-            console.log(response)
-        })
-        .catch(function(error){
-            console.log(error);
-        })
-}
-
 document.addEventListener("DOMContentLoaded", function(event) {
     selectOption('.option-wrapper');
-    getToken();
 });
 
 

@@ -27,4 +27,3 @@ function viewPlan(infoClass, target){
 document.addEventListener("DOMContentLoaded", function(event) {
     selectOption('.option-wrapper');
 });
-
