@@ -941,36 +941,70 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 
+const config = __webpack_require__(28);
 
-function selectOption(optionClass){
+
+let token;
+
+function selectOption(optionClass) {
     const delegationTarget = document.querySelector(optionClass);
-    delegationTarget.addEventListener('click', (e)=>{
-        let target = (e.target.tagName === 'SPAN')? e.target.parentNode : e.target;
-        if(!target.classList.contains("option")) return false;
+    delegationTarget.addEventListener('click', (e) => {
+        let target = (e.target.tagName === 'SPAN') ? e.target.parentNode : e.target;
+        if (!target.classList.contains("option")) return false;
         resetOption('.selected');
         viewPlan('membership-information', target);
         target.classList.add('selected');
     })
 }
 
-function resetOption(selectedClass){
-    document.querySelectorAll(selectedClass).forEach((item)=>{
+function resetOption(selectedClass) {
+    document.querySelectorAll(selectedClass).forEach((item) => {
         item.classList.remove('selected')
     })
 }
 
-function viewPlan(infoClass, target){
-    document.querySelector("."+infoClass+"-yes").classList.remove('hide');
-    document.querySelector("."+infoClass+"-no").classList.add('hide');
-    document.querySelector('.'+infoClass+"-plan").innerHTML = target.innerText;
-    document.querySelector("."+infoClass+"-price").innerHTML = target.dataset.price;
+function viewPlan(infoClass, target) {
+    document.querySelector("." + infoClass + "-yes").classList.remove('hide');
+    document.querySelector("." + infoClass + "-no").classList.add('hide');
+    document.querySelector('.' + infoClass + "-plan").innerHTML = target.innerText;
+    document.querySelector("." + infoClass + "-price").innerHTML = target.dataset.price;
 }
 
-document.addEventListener("DOMContentLoaded", function(event) {
+function getToken() {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/token')
+        .then(function (response) {
+            token = response.data['access_token'];
+            console.log(token)
+        });
+}
+
+function pay() {
+    let payObj = {};
+    payObj['merchant_uid'] = "classPay_" + new Date().getTime();
+    payObj.name = document.querySelector(".option.selected").innerText;
+    payObj.amount = document.querySelector(".option.selected").dataset.amount;
+    payObj.buyer_name = document.getElementById('pay-name').value;
+    payObj.card_number = document.getElementById('pay-card').value;
+    payObj.expiry = document.getElementById('pay-due').value;
+    payObj.birth = document.getElementById('pay-birth').value;
+    payObj['pwd_2digit'] = document.getElementById('pay-pw').value;
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.post('/pay', payObj)
+        .then(function(res){
+            console.log(res)
+        })
+}
+
+function payEvent() {
+    document.querySelector('.submit-btn').addEventListener('click', ()=>{
+        pay()
+    })
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    getToken();
     selectOption('.option-wrapper');
+    payEvent()
 });
-
-
 
 /***/ }),
 /* 9 */
@@ -1845,6 +1879,12 @@ module.exports = function spread(callback) {
   };
 };
 
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports) {
+
+module.exports = {"RESTKey":"6626876387746060","RESTSecretKey":"qqNhlQRWu9yiSdDIWo9ApOCelxh9SNAidozzfrwJA42tiFbe3lPs9sHuZZERMea0DKASb6CMbEftjqHn","code":"imp85908354","private":{"merchant_uid":"imp85908354","amount":10,"card_number":"9411-6126-2532-9608","expiry":"2021-09","birth":"920506","pwd_2digit":"05"}}
 
 /***/ })
 /******/ ]);
