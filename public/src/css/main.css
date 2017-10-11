@@ -1,30 +1,53 @@
-.body {
-    margin: 0 0 0 0;
-    padding: 0 0 0 0;
-    max-width: 800px;
-    height: 100vh;
+* {
+    box-sizing: border-box;
 }
 
-.navigation-bar{
-    position:absolute;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+body {
+    display: inline;
+    flex: 1;
+    overflow-x: hidden;
+
+}
+
+/*body {*/
+    /*margin: 0 0 0 0;*/
+    /*padding: 0 0 0 0;*/
+    /*overflow-x: hidden;*/
+/*}*/
+
+.navigation-bar {
+    position: fixed;
+    display: flex;
+    justify-content: center;
     top: 0;
     width: 100%;
     height: 50px;
     background-color: chocolate;
+    z-index: 1;
+    margin: 0 0 0 0;
+    left: 0;
 }
 
 .content {
+    display: none;
     width: 80%;
     height: 100%;
     position: absolute;
-    top:10%;
-    left:10%;
+    top: 10%;
+    left: 10%;
 }
 
 .option-select {
     position: relative;
     display: block;
-    width:100%;
+    width: 100%;
     height: 20%;
 }
 
@@ -34,7 +57,6 @@
     border: solid 1px;
     position: absolute;
     display: flex;
-    flex:3;
 }
 
 .content-div {
@@ -42,33 +64,26 @@
 }
 
 .option {
+    flex: 1;
     text-align: center;
     width: 200px;
     height: 50px;
     cursor: pointer;
     border: solid 1px;
-    margin: 20px auto 20px;
+    margin: 20px 20px 20px 20px;
     font-size: 20px;
     line-height: 50px;
     vertical-align: middle;
 }
-
 
 .option.selected {
     background-color: aquamarine;
     color: azure;
 }
 
-.option:hover{
+.option:hover {
     background-color: aqua;
     color: white;
-}
-
-.select-layer {
-    position: absolute;
-    width: 200px;
-    height: 50px;
-    z-index: 1;
 }
 
 .option-basic {
@@ -88,17 +103,114 @@
     display: none;
 }
 
-.submit {
-    width: 100px;
-    height: 100px;
-    background-color: chocolate;
-}
-
 .pay-info-wrapper {
-    display: inline;
-    flex: 2;
+    display: block;
+    width: 100%
 }
 
 .pay-info {
-    flex: 1;
+    width: 50%
+}
+
+.nav-text {
+    margin: 0 0 0 0;
+}
+
+.navigation-bar-label {
+    display: none;
+    align-items: center;
+    color: aliceblue;
+    top: 5px;
+}
+
+.display-on {
+    display: block
+}
+
+.navigation-bar-label.nav-on {
+    display: flex;
+}
+
+.menu-bar {
+    position: absolute;
+    width: 200px;
+    height: 100%;
+    background-color: brown;
+    top: 0;
+    left: -200px;
+    z-index: 3;
+    overflow : hidden;
+    transition-duration: 0.5s;
+    color: white;
+    text-align: center;
+}
+
+.menu-bar.menu-on {
+    left: 0;
+}
+
+.menu-img {
+    position: fixed;
+    left: 10px;
+    top: 5px;
+    width: 40px;
+    height: auto;
+    cursor: pointer;
+}
+
+.layer {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: transparent;
+    opacity: 0.9;
+}
+
+.layer.on {
+    display: block;
+}
+
+.menu-title{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: crimson;
+    width: 100%;
+    font-size: 25px;
+}
+
+.menu-option {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.menu-option:hover{
+    opacity: 0.7
+}
+
+.menu-option.menu-selected {
+    background-color: darkred;
+}
+
+@media (max-width: 480px) {
+    .content {
+        width: 400px;
+        left: 0;
+    }
+
+    .option-wrapper{
+        display: block;
+    }
+
+    .option {
+        width: 400px;
+    }
 }

@@ -7,11 +7,24 @@
 </head>
 <body>
 
-<div class="navigation-bar">
-
+<div class="menu-bar">
+    <div class="menu-option menu-sub menu-selected" data-page="content-pay" data-title="nav-pay">구독하기</div>
+    <div class="menu-option menu-refund" data-page="content-refund" data-title="nav-refund">환불하기</div>
 </div>
 
-<div class="content">
+<div class="layer"></div>
+
+<div class="navigation-bar">
+    <div class="navigation-bar-label nav-pay nav-on">
+        <h1 class="nav-text">Class Pay 구독</h1>
+    </div>
+    <div class="navigation-bar-label nav-refund">
+        <h1 class="nav-text">Class Pay 환불하기</h1>
+    </div>
+    <img src="./static/menu_img.png" class="menu-img">
+</div>
+
+<div class="content content-pay display-on">
     <div class="option-select content-div">
         <h3>멤버십 선택</h3>
         <div class="option-wrapper">
@@ -41,6 +54,20 @@
                 <label class="pay label-pay-name">
                     <span class="label-text">이름</span>
                     <input id="pay-name">
+                </label>
+            </div>
+
+            <div class="pay-info">
+                <label class="pay label-pay-phone">
+                    <span class="label-text">이메일주소</span>
+                    <input id="pay-email">
+                </label>
+            </div>
+
+            <div class="pay-info">
+                <label class="pay label-pay-email">
+                    <span class="label-text">연락처</span>
+                    <input id="pay-phone">
                 </label>
             </div>
 
@@ -76,6 +103,38 @@
 
         <button class="submit-btn">구독</button>
 
+
+    </div>
+</div>
+
+<div class="content content-refund">
+    <div class="submit-form content-div">
+        <h3>결제정보 입력</h3>
+        <div class="pay-info-wrapper">
+            <div class="pay-info">
+                <label class="pay label-refund-name">
+                    <span class="label-text">이름</span>
+                    <input id="refund-name">
+                </label>
+            </div>
+
+            <div class="pay-info">
+                <label class="pay label-refund-name">
+                    <span class="label-text">이메일</span>
+                    <input id="refund-email">
+                </label>
+            </div>
+
+            <div class="pay-info">
+                <label class="pay label-refund-uid">
+                    <span class="label-text">주문번호</span>
+                    <input id="refund-uid">
+                </label>
+            </div>
+
+        </div>
+
+        <button class="refund-btn">환불</button>
 
     </div>
 </div>
