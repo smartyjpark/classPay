@@ -938,6 +938,8 @@ module.exports = Cancel;
 
 const axios = __webpack_require__(9);
 
+emailjs.init("user_iGQ8hGGPREMvZY1u4Pgg5");
+
 function selectOption(optionClass) {
     const delegationTarget = document.querySelector(optionClass);
     delegationTarget.addEventListener('click', (e) => {
@@ -1037,9 +1039,10 @@ function pay() {
             console.log("------")
             console.log(res.data)
             if (res.data.code === 0) {
-                alert('결제에 성공하였습니다. 해당 이메일로 결제정보가 전송됩니다. [주문번호]: '+ payObj.merchant_uid);
+                alert('결제에 성공하였습니다. 해당 이메일로 결제정보가 전송됩니다. [주문번호]: ' + payObj.merchant_uid);
                 resetValue()
                 resetOption()
+                sendMail(payObj, "결제")
             } else {
                 alert("결제에 실패하셧습니다. " + res.data.message);
                 resetValue()
@@ -1059,6 +1062,7 @@ function refund() {
                 alert("환불이 완료되었습니다. 이메일로 환불정보가 전송됩니다.");
                 resetValue();
                 resetOption();
+                sendMail(res.data.response, "환불")
             } else {
                 console.log(res.data);
                 alert("환불에 실패하셧습니다. " + res.data);
@@ -1070,6 +1074,28 @@ function refund() {
             alert(error)
         })
 
+}
+
+function sendMail(obj, payOrRefund) {
+    emailjs.send("gmail", "template_Ju4Ld", {
+        "to_email": obj.buyer_email,
+        "from_name": "classting",
+        "from_mail": "classting@classting.com",
+        "reply_to": "classting@classting.com",
+        "user_name": obj.buyer_name,
+        "pay_or_refund": payOrRefund,
+        "service_name": obj.name,
+        "service_price": obj.amount,
+        "uid": obj.merchant_uid
+    })
+        .then(
+            (response) => {
+                console.log("SUCCESS", response);
+            },
+            (error) => {
+                console.log("FAILED", error);
+            }
+        )
 }
 
 function payEvent() {
