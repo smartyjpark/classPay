@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
     <title>Class Pay</title>
     <link rel="stylesheet" href="./src/css/main.css">
 </head>
@@ -13,6 +14,12 @@
 </div>
 
 <div class="layer"></div>
+<div class="modal">
+    <span>X</span>
+    <div class="modal-content">
+
+    </div>
+</div>
 
 <div class="navigation-bar">
     <div class="navigation-bar-label nav-pay nav-on">
@@ -28,13 +35,13 @@
     <div class="option-select content-div">
         <h3>멤버십 선택</h3>
         <div class="option-wrapper">
-            <div class="option option-basic" data-price="9,900원" data-amount="99">
+            <div class="option option-basic" data-price="9,900원" data-amount="9900">
                 <span>Basic</span>
             </div>
-            <div class="option option-standard" data-price="29,900원" data-amount="299">
+            <div class="option option-standard" data-price="29,900원" data-amount="29900">
                 <span>Standard</span>
             </div>
-            <div class="option option-premium" data-price="49,900원" data-amount="499">
+            <div class="option option-premium" data-price="49,900원" data-amount="49900">
                 <span>Premium</span>
             </div>
         </div>
@@ -50,91 +57,95 @@
     <div class="submit-form content-div">
         <h3>결제정보 입력</h3>
         <div class="pay-info-wrapper">
-            <div class="pay-info">
-                <label class="pay label-pay-name">
-                    <span class="label-text">이름</span>
-                    <input id="pay-name">
-                </label>
+            <div class="info-container">
+                <div class="pay-info">
+                    <label class="pay label-pay-name">
+                        <span class="label-text">이름</span>
+                    </label>
+                    <input class="input input-pay" id="pay-name">
+                </div>
+
+                <div class="pay-info">
+                    <label class="pay label-pay-phone">
+                        <span class="label-text">이메일주소</span>
+                    </label>
+                    <input class="input input-pay" id="pay-email">
+                </div>
+            </div>
+            <div class="info-container">
+                <div class="pay-info">
+                    <label class="pay label-pay-email">
+                        <span class="label-text">연락처</span>
+                    </label>
+                    <input class="input input-pay" id="pay-phone">
+                </div>
+
+                <div class="pay-info">
+                    <label class="pay label-pay-birth">
+                        <span class="label-text">생년월일 <span>(YYMMDD)</span> 또는 사업자등록번호 </span>
+                    </label>
+                    <input class="input input-pay" id="pay-birth" maxlength="10">
+                </div>
+            </div>
+            <div class="info-container">
+                <div class="pay-info">
+                    <label class="pay label-pay-card">
+                        <span class="label-text">카드번호 <span>('-'없이 숫자만 입력하세요)</span></span>
+                    </label>
+                    <input class="input input-pay" id="pay-card" type="password" class="pay-card" maxlength="16">
+                </div>
+
+                <div class="pay-info">
+                    <label class="pay label-pay-due">
+                        <span class="label-text">카드 유효기간 <span>(YYMM)</span></span>
+                    </label>
+                    <input class="input input-pay" id="pay-due" maxlength="4">
+                </div>
             </div>
 
-            <div class="pay-info">
-                <label class="pay label-pay-phone">
-                    <span class="label-text">이메일주소</span>
-                    <input id="pay-email">
-                </label>
-            </div>
+            <div class="info-container">
+                <div class="pay-info">
+                    <label class="pay label-pay-pw">
+                        <span class="label-text">카드 비밀번호 앞 두자리</span>
+                    </label>
+                    <input class="input input-pay" id="pay-pw" type="password" maxlength="2">
+                </div>
+                <div class="pay-info">
 
-            <div class="pay-info">
-                <label class="pay label-pay-email">
-                    <span class="label-text">연락처</span>
-                    <input id="pay-phone">
-                </label>
-            </div>
-
-            <div class="pay-info">
-                <label class="pay label-pay-birth">
-                    <span class="label-text">생년월일</span>
-                    <input id="pay-birth">
-                </label>
-            </div>
-
-            <div class="pay-info">
-                <label class="pay label-pay-card">
-                    <span class="label-text">카드번호</span>
-                    <input id="pay-card">
-                </label>
-            </div>
-
-            <div class="pay-info">
-                <label class="pay label-pay-due">
-                    <span class="label-text">카드 유효기간</span>
-                    <input id="pay-due">
-                </label>
-            </div>
-
-            <div class="pay-info">
-                <label class="pay label-pay-pw">
-                    <span class="label-text">카드 비밀번호 앞 두자리</span>
-                    <input id="pay-pw">
-                </label>
+                </div>
             </div>
 
         </div>
-
-        <button class="submit-btn">구독</button>
-
-
+        <button class="submit-btn btn">구독</button>
     </div>
 </div>
 
 <div class="content content-refund">
     <div class="submit-form content-div">
-        <h3>결제정보 입력</h3>
+        <h3>환불정보 입력</h3>
         <div class="pay-info-wrapper">
             <div class="pay-info">
                 <label class="pay label-refund-name">
                     <span class="label-text">이름</span>
-                    <input id="refund-name">
                 </label>
+                <input class="input input-refund" id="refund-name" maxlength="5">
             </div>
 
             <div class="pay-info">
                 <label class="pay label-refund-name">
                     <span class="label-text">이메일</span>
-                    <input id="refund-email">
                 </label>
+                <input class="input input-refund" id="refund-email">
             </div>
 
             <div class="pay-info">
                 <label class="pay label-refund-uid">
                     <span class="label-text">주문번호</span>
-                    <input id="refund-uid">
                 </label>
+                <input class="input input-refund" id="refund-uid">
             </div>
-
         </div>
-
-        <button class="refund-btn">환불</button>
+        <button class="refund-btn btn">환불</button>
 
     </div>
 </div>

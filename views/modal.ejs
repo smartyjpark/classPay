@@ -1,0 +1,13 @@
+<div class="modal-template">
+    <h3 class="modal-head">
+        <%= pay_or_refund %> 안내
+    </h3>
+    <span><strong>구매자 이름 : </strong><%= user_name %></span>
+    <span><strong>구독 서비스 : </strong><%= service_name %></span>
+    <span><strong>금액 : </strong><%= service_price %></span>
+    <span><strong>주문번호 : </strong><%= uid %></span>
+    <span><strong>상태 : </strong><%= payOrRefund %></span>
+    <% if (card) {%>
+    <span><strong>카드번호 : </strong><%= card %></span>
+    <% } %>
+</div>

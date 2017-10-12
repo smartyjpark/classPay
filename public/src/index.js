@@ -84,6 +84,11 @@ function layerEvent() {
 }
 
 function pay() {
+    if (!document.querySelector('.option.selected')) {
+        alert("멤버십을 먼저 선택하세요!");
+        window.scrollTo(0, 0);
+        return false;
+    }
     let payObj = {};
     payObj.merchant_uid = "classPay_" + new Date().getTime();
     payObj.buyer_email = document.getElementById('pay-email').value;
@@ -92,16 +97,21 @@ function pay() {
     payObj.amount = document.querySelector(".option.selected").dataset.amount;
     payObj.buyer_name = document.getElementById('pay-name').value;
     payObj.card_number = document.getElementById('pay-card').value;
-    payObj.expiry = document.getElementById('pay-due').value;
+    payObj.expiry = '20' + document.getElementById('pay-due').value.slice(0, 2) + '-' + document.getElementById('pay-due').value.slice(2, 4);
     payObj.birth = document.getElementById('pay-birth').value;
     payObj['pwd_2digit'] = document.getElementById('pay-pw').value;
-    axios.post('/pay', payObj)
+    if (formChecker('pay')) axios.post('/pay', payObj)
         .then((res) => {
             console.log(res)
             console.log("------")
             console.log(res.data)
             if (res.data.code === 0) {
-                alert('결제에 성공하였습니다. 해당 이메일로 결제정보가 전송됩니다. [주문번호]: ' + payObj.merchant_uid);
+                alert('결제에 성공하였습니다. 해당 이메일로 결제정보가 전송됩니다. \n[주문번호]: ' + payObj.merchant_uid
+                    + "\n[고객명]: " + payObj.buyer_name
+                    + "\n[상품명]: " + payObj.name
+                    + "\n[이메일]: " + payObj.buyer_email
+                    + "\n[결제카드]: " + payObj.card_number.slice(0,12)+"****");
+
                 resetValue()
                 resetOption()
                 sendMail(payObj, "결제")
@@ -118,7 +128,7 @@ function refund() {
     refundObj.merchant_uid = document.getElementById('refund-uid').value;
     refundObj.buyer_name = document.getElementById('refund-name').value;
     refundObj.buyer_email = document.getElementById('refund-email').value;
-    axios.post('/refund', refundObj)
+    if (formChecker('refund')) axios.post('/refund', refundObj)
         .then((res) => {
             if (res.data.code === 0) {
                 alert("환불이 완료되었습니다. 이메일로 환불정보가 전송됩니다.");
@@ -172,12 +182,118 @@ function refundEvent() {
     })
 }
 
+function modalOn() {
+    if (!document.querySelector('.modal-on')) {
+        document.querySelector('.modal').classList.add('modal-on')
+    }
+}
+
+function modalOff() {
+    if (document.querySelector('.modal-on')) {
+        document.querySelector('.modal').classList.remove('modal-on')
+    }
+}
+
+function modalOffEvent() {
+    document.querySelector('.modal > span').addEventListener('click', (e) => {
+        modalOff()
+    })
+}
+
+//입력 폼 관련 이벤트
+
+function onlyNumber(str) {
+    str = str.replace(/[^0-9]/g, '')
+    return str;
+}
+
+function autoPhoneNumber(str) {
+    str = str.replace(/[^0-9]/g, '')
+    let tmp = '';
+    if (str.length < 4) {
+        return str;
+    } else if (str.length < 7) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3);
+        return tmp;
+    } else if (str.length < 11) {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 3);
+        tmp += '-';
+        tmp += str.substr(6);
+        return tmp;
+    } else {
+        tmp += str.substr(0, 3);
+        tmp += '-';
+        tmp += str.substr(3, 4);
+        tmp += '-';
+        tmp += str.substr(7);
+        return tmp;
+    }
+    return str;
+}
+
+function autoPhoneNumberEvent() {
+    const phone = document.getElementById('pay-phone');
+    phone.onkeyup = function (event) {
+        event = event || window.event;
+        let _val = this.value.trim();
+        this.value = autoPhoneNumber(_val);
+    }
+}
+
+function autoNumberEvent(id) {
+    const card = document.getElementById(id);
+    card.onkeyup = function (event) {
+        event = event || window.event;
+        let _val = this.value.trim();
+        this.value = onlyNumber(_val);
+    }
+}
+
+//form 입력 체커
+
+function formChecker(payOrRefund) {
+    let text = ""
+    document.querySelectorAll('.input-' + payOrRefund).forEach((ele) => {
+        if (!ele.value) {
+            text += ele.parentNode.innerText
+        }
+    })
+    if (text === "") {
+        return true;
+    } else {
+        alert(text + "양식이 채워지지 않았습니다")
+        return false;
+    }
+}
+
+function optionSelectChecker() {
+    document.querySelectorAll('.input-pay').forEach((ele) => {
+        ele.addEventListener('click', () => {
+            if (!document.querySelector('.option.selected')) {
+                alert("멤버십을 먼저 선택하세요!");
+                window.scrollTo(0, 0);
+                ele.blur();
+            }
+        })
+    })
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     getToken();
     selectOption('.option-wrapper');
     payEvent();
     menuOn();
     layerEvent();
-    pageChange()
-    refundEvent()
+    pageChange();
+    refundEvent();
+    modalOffEvent();
+    autoPhoneNumberEvent();
+    optionSelectChecker();
+    autoNumberEvent('pay-card');
+    autoNumberEvent('pay-due');
+    autoNumberEvent('pay-birth');
 });
